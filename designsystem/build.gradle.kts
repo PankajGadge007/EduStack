@@ -5,9 +5,7 @@ plugins {
 
 android {
     namespace = "com.pankajgadge.designsystem"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk =36
 
     defaultConfig {
         minSdk = 24
@@ -26,11 +24,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        jvmToolchain(17)
     }
 }
 

@@ -11,6 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -20,9 +21,11 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Edu Stack"
+
 include(":app")
 include(":quiz")
 include(":security")
 include(":designsystem")
 include(":auth")
-include(":core")
+include(":core-api")
+include(":core-impl")
