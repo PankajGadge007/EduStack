@@ -1,8 +1,10 @@
 package com.pankajgadge.edustack.core.di
 
+import com.pankajgadge.edustack.core.StudentApi
 import com.pankajgadge.edustack.core.auth.TokenProvider
 import com.pankajgadge.edustack.core.logging.Logger
 import com.pankajgadge.edustack.core.logging.TimberLogger
+import com.pankajgadge.edustack.core.network.FakeStudentApi
 import com.pankajgadge.edustack.core.network.JwtInterceptor
 import com.pankajgadge.edustack.core.network.OkHttpProvider
 import com.pankajgadge.edustack.core.network.RetrofitProvider
@@ -17,6 +19,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideStudentApi(): StudentApi = FakeStudentApi()
 
     @Provides
     @Singleton

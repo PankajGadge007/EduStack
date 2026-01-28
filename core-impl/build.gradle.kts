@@ -21,6 +21,7 @@ android {
 dependencies {
 
     implementation(project(":core-api"))
+    implementation(project(":security"))
 
     // Hilt (KSP)
     implementation(libs.hilt.android)
