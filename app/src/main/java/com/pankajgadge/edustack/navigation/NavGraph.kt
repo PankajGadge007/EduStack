@@ -2,10 +2,12 @@ package com.pankajgadge.edustack.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.pankajgadge.edustack.ui.screens.homescreen.HomeScreen
+import com.pankajgadge.quiz.presentation.QuizDetailScreen
+import com.pankajgadge.quiz.presentation.QuizListScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
@@ -19,7 +21,6 @@ sealed class Screen(val route: String) {
     }
     object Help : Screen("help")
 }
-
 
 @Composable
 fun NavGraph(
@@ -45,8 +46,10 @@ fun NavGraph(
             )
         }
 
-        composable(Screen.QuizDetail.route) {
+        composable(Screen.QuizDetail.route) { backStackEntry ->
+            val quizId = backStackEntry.arguments?.getString("quizId") ?: return@composable
             QuizDetailScreen(
+                quizId = quizId,
                 onBackClick = { navController.popBackStack() }
             )
         }
