@@ -1,8 +1,5 @@
 package com.pankajgadge.firebase.di
 
-/*
-- Provides Firebase SDK instances
-*/
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -23,9 +20,7 @@ object FirebaseModule {
      */
     @Provides
     @Singleton
-    fun provideFirebaseAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
-    }
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     /**
      * Provides FirebaseFirestore instance for database operations
@@ -33,9 +28,7 @@ object FirebaseModule {
      */
     @Provides
     @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
+    fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
 
     /**
      * Provides FirebaseStorage instance for file storage
@@ -43,7 +36,5 @@ object FirebaseModule {
      */
     @Provides
     @Singleton
-    fun provideFirebaseStorage(): FirebaseStorage {
-        return FirebaseStorage.getInstance()
-    }
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
 }

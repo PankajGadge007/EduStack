@@ -18,11 +18,18 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -31,19 +38,28 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        jvmToolchain(17)
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
+//    kotlin {
+//        jvmToolchain(17)
+//    }
+
     buildFeatures {
-        buildConfig = true
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 
     flavorDimensions += "backend"
     productFlavors {
@@ -56,37 +72,47 @@ android {
             buildConfigField("Boolean", "USE_FIREBASE", "false")
         }
     }
-
 }
 
 dependencies {
-    // Module dependencies
+    // Modules
+    implementation(project(":core:api"))
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
+    implementation(project(":core:firebase"))
     implementation(project(":core:ui"))
     implementation(project(":feature:auth"))
     implementation(project(":feature:quiz"))
     implementation(project(":feature:practical"))
     implementation(project(":feature:help"))
+    implementation(project(":security"))
+    implementation(project(":designsystem"))
 
-    // AndroidX
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Core
+    implementation(libs.androidx.core.ktx)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
+
+    // AndroidX
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
+    // Logging
+    implementation(libs.timber)
+
     // Firebase
-    implementation(platform(libs.firebase.bom))  // Firebase BOM (Bill of Materials) manages all Firebase library versions
-    implementation(libs.bundles.firebase)         // All Firebase libraries (Includes: Firestore, Auth, Storage)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
 //    implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
 
     // Hilt
@@ -97,17 +123,12 @@ dependencies {
     // Lifecycle
     implementation(libs.bundles.lifecycle)
 
-    // Core
-    implementation(libs.androidx.core.ktx)
-
-    // Logging
-    implementation(libs.timber)
-
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-//    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

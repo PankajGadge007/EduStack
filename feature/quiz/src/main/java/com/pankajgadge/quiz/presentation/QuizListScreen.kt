@@ -6,20 +6,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.pankajgadge.common.result.Result
 import com.pankajgadge.domain.model.Quiz
-import com.pankajgadge.ui.components.ErrorMessage
-import com.pankajgadge.ui.components.LoadingIndicator
+import com.pankajgadge.quiz.model.QuizViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizListScreen(
     onQuizClick: (String) -> Unit,
-    viewModel: QuizListViewModel = hiltViewModel()
+    viewModel: QuizViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val quizzesState by viewModel.quizzesState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -28,44 +29,58 @@ fun QuizListScreen(
             )
         }
     ) { paddingValues ->
-        when (val state = uiState) {
-            is QuizListUiState.Loading -> {
-                LoadingIndicator(Modifier.padding(paddingValues))
+        Box(modifier = Modifier.padding(paddingValues)) {
+            when (val state = quizzesState) {
+                is Result.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is Result.Success -> {
+                    if (state.data.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("No quizzes available")
+                        }
+                    } else {
+                        LazyColumn(
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(state.data) { quiz ->
+                                QuizCard(
+                                    quiz = quiz,
+                                    onClick = { onQuizClick(quiz.id) }
+                                )
+                            }
+                        }
+                    }
+                }
+                is Result.Error -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = state.exception.message ?: "Unknown error",
+                                color = MaterialTheme.colorScheme.error
+                            )
+                            Button(onClick = { viewModel.loadQuizzes() }) {
+                                Text("Retry")
+                            }
+                        }
+                    }
+                }
             }
-            is QuizListUiState.Success -> {
-                QuizList(
-                    quizzes = state.quizzes,
-                    onQuizClick = onQuizClick,
-                    modifier = Modifier.padding(paddingValues)
-                )
-            }
-            is QuizListUiState.Error -> {
-                ErrorMessage(
-                    message = state.message,
-                    onRetry = { viewModel.loadQuizzes() },
-                    modifier = Modifier.padding(paddingValues)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun QuizList(
-    quizzes: List<Quiz>,
-    onQuizClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        items(quizzes) { quiz ->
-            QuizCard(
-                quiz = quiz,
-                onClick = { onQuizClick(quiz.id) }
-            )
         }
     }
 }
@@ -73,11 +88,10 @@ private fun QuizList(
 @Composable
 private fun QuizCard(
     quiz: Quiz,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
 ) {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)

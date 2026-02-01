@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
     implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
+    implementation(libs.okhttp.logging.interceptor)
 
     // Hilt
     implementation(libs.hilt.android)

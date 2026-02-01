@@ -1,34 +1,32 @@
-package com.pankajgadge.quiz.presentation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.pankajgadge.common.result.Result
 import com.pankajgadge.domain.model.Question
-import com.pankajgadge.ui.components.LoadingIndicator
+import com.pankajgadge.quiz.model.QuizViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizDetailScreen(
+    quizId: String,
     onBackClick: () -> Unit,
-    viewModel: QuizDetailViewModel = hiltViewModel()
+    viewModel: QuizViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val selectedQuiz by viewModel.selectedQuiz.collectAsState()
     val answers by viewModel.answers.collectAsState()
+    val submitState by viewModel.submitState.collectAsState()
+
+    LaunchedEffect(quizId) {
+        viewModel.loadQuiz(quizId)
+    }
 
     Scaffold(
         topBar = {
@@ -42,35 +40,46 @@ fun QuizDetailScreen(
             )
         }
     ) { paddingValues ->
-        when (val state = uiState) {
-            is QuizDetailUiState.Loading -> {
-                LoadingIndicator(Modifier.padding(paddingValues))
-            }
-            is QuizDetailUiState.Success -> {
-                QuizContent(
-                    quiz = state.quiz,
-                    answers = answers,
-                    onAnswerSelected = viewModel::selectAnswer,
-                    onSubmit = viewModel::submitQuiz,
-                    modifier = Modifier.padding(paddingValues)
-                )
-            }
-            is QuizDetailUiState.Submitting -> {
-                LoadingIndicator(Modifier.padding(paddingValues))
-            }
-            is QuizDetailUiState.Submitted -> {
-                ResultScreen(
-                    score = state.score,
-                    onBackClick = onBackClick,
-                    modifier = Modifier.padding(paddingValues)
-                )
-            }
-            is QuizDetailUiState.Error -> {
-                ErrorMessage(
-                    message = state.message,
-                    onRetry = { /* reload */ },
-                    modifier = Modifier.padding(paddingValues)
-                )
+        Box(modifier = Modifier.padding(paddingValues)) {
+            when (val state = selectedQuiz) {
+                is Result.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is Result.Success -> {
+                    when (val submit = submitState) {
+                        is Result.Success -> {
+                            ResultScreen(
+                                score = submit.data,
+                                onBackClick = onBackClick
+                            )
+                        }
+                        else -> {
+                            QuizContent(
+                                quiz = state.data,
+                                answers = answers,
+                                onAnswerSelected = viewModel::selectAnswer,
+                                onSubmit = { viewModel.submitQuiz(quizId) },
+                                isSubmitting = submit is Result.Loading
+                            )
+                        }
+                    }
+                }
+                is Result.Error -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = state.exception.message ?: "Failed to load quiz",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
             }
         }
     }
@@ -82,9 +91,9 @@ private fun QuizContent(
     answers: Map<String, Int>,
     onAnswerSelected: (String, Int) -> Unit,
     onSubmit: () -> Unit,
-    modifier: Modifier = Modifier
+    isSubmitting: Boolean
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(16.dp),
@@ -119,9 +128,16 @@ private fun QuizContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            enabled = answers.size == quiz.questions.size
+            enabled = answers.size == quiz.questions.size && !isSubmitting
         ) {
-            Text("Submit Quiz")
+            if (isSubmitting) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            } else {
+                Text("Submit Quiz")
+            }
         }
     }
 }
@@ -158,7 +174,8 @@ private fun QuestionItem(
                             selected = selectedAnswer == index,
                             onClick = { onAnswerSelected(index) }
                         )
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
                         selected = selectedAnswer == index,
@@ -178,14 +195,14 @@ private fun QuestionItem(
 @Composable
 private fun ResultScreen(
     score: Int,
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onBackClick: () -> Unit
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Quiz Completed!",
