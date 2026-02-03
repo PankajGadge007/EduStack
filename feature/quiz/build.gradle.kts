@@ -44,7 +44,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.androidx.compose.material3)
 
     // Hilt (KSP)
     implementation(libs.hilt.android)

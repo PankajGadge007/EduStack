@@ -1,7 +1,8 @@
 package com.pankajgadge.firebase.di
 
-
+import com.pankajgadge.api.repository.AuthRepository
 import com.pankajgadge.api.repository.QuizRepository
+import com.pankajgadge.firebase.repository.FirebaseAuthRepositoryImpl
 import com.pankajgadge.firebase.repository.FirebaseQuizRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -24,4 +25,10 @@ abstract class FirebaseRepositoryModule {
     abstract fun bindFirebaseQuizRepository(
         impl: FirebaseQuizRepositoryImpl
     ): QuizRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthRepository(
+        impl: FirebaseAuthRepositoryImpl
+    ): AuthRepository
 }

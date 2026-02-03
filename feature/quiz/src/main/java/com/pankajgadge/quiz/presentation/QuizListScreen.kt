@@ -18,6 +18,7 @@ import com.pankajgadge.quiz.model.QuizViewModel
 @Composable
 fun QuizListScreen(
     onQuizClick: (String) -> Unit,
+    onBackClick: () -> Unit,
     viewModel: QuizViewModel = hiltViewModel()
 ) {
     val quizzesState by viewModel.quizzesState.collectAsState()
@@ -25,7 +26,12 @@ fun QuizListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Quizzes") }
+                title = { Text("Quizzes") },
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Text("←")
+                    }
+                }
             )
         }
     ) { paddingValues ->
@@ -39,6 +45,7 @@ fun QuizListScreen(
                         CircularProgressIndicator()
                     }
                 }
+
                 is Result.Success -> {
                     if (state.data.isEmpty()) {
                         Box(
@@ -61,6 +68,7 @@ fun QuizListScreen(
                         }
                     }
                 }
+
                 is Result.Error -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
