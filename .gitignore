@@ -13,3 +13,21 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/google-services.json
+
+# Secrets and Keys
+*.jks
+*.keystore
+google-services.json
+
+# IDE Files
+.idea/
+out/
+gen/
+
+# Build files
+build/
+.gradle/
+
+# Captures
+captures/
