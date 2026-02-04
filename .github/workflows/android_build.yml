@@ -38,7 +38,7 @@ jobs:
 
       # Step 3: Cache Gradle files (makes builds MUCH faster!)
       - name: Cache Gradle packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -55,9 +55,9 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug --stacktrace
 
-      # Step 6: Upload the APK so you can download it
+      # Step 6: Upload the APK so you can download it (Updated to v4!)
       - name: Upload Debug APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success()
         with:
           name: app-debug-apk
