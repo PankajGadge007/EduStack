@@ -1,8 +1,8 @@
-package com.pankajgadge.edustack.viewmodel
+package com.pankajgadge.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pankajgadge.api.repository.AuthRepository
+import com.pankajgadge.domain.repository.AuthRepository
 import com.pankajgadge.common.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

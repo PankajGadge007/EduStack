@@ -20,10 +20,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pankajgadge.edustack.ui.screens.dashboard.DashboardScreen
-import com.pankajgadge.edustack.ui.screens.login.LoginScreen
-import com.pankajgadge.edustack.viewmodel.LoginViewModel
-import com.pankajgadge.quiz.presentation.QuizDetailScreen
-import com.pankajgadge.quiz.presentation.QuizListScreen
+import com.pankajgadge.auth.presentation.login.LoginScreen
+import com.pankajgadge.auth.presentation.login.LoginViewModel
+import com.pankajgadge.quiz.presentation.detail.QuizDetailScreen
+import com.pankajgadge.quiz.presentation.list.QuizListScreen
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
@@ -97,28 +97,10 @@ fun NavGraph(
             )
         }
 
-        // Quiz Detail Screen
-        composable(Screen.QuizDetail.route) { backStackEntry ->
-            val quizId = backStackEntry.arguments?.getString("quizId") ?: return@composable
-            QuizDetailScreen(
-                quizId = quizId,
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
         // Practical List Screen (Placeholder)
         composable(Screen.PracticalList.route) {
             PlaceholderScreen(
                 title = "IT Practicals",
-                message = "Coming Soon!",
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        // Practical Detail Screen (Placeholder)
-        composable(Screen.PracticalDetail.route) {
-            PlaceholderScreen(
-                title = "Practical Detail",
                 message = "Coming Soon!",
                 onBackClick = { navController.popBackStack() }
             )
@@ -132,6 +114,25 @@ fun NavGraph(
                 onBackClick = { navController.popBackStack() }
             )
         }
+
+        // Quiz Detail Screen
+        composable(Screen.QuizDetail.route) { backStackEntry ->
+            val quizId = backStackEntry.arguments?.getString("quizId") ?: return@composable
+            QuizDetailScreen(
+                quizId = quizId,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        // Practical Detail Screen (Placeholder)
+        composable(Screen.PracticalDetail.route) {
+            PlaceholderScreen(
+                title = "Practical Detail",
+                message = "Coming Soon!",
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
     }
 }
 

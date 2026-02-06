@@ -1,6 +1,4 @@
-package com.pankajgadge.api
-
-import com.pankajgadge.api.model.Student
+package com.pankajgadge.impl.datasource
 
 interface StudentApi {
     suspend fun getStudents(): List<Student>

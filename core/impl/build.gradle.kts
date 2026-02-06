@@ -38,6 +38,8 @@ dependencies {
 
     implementation(project(":security"))
     implementation(project(":core:api"))
+    implementation(project(":core:domain"))
+    implementation(project(":feature:auth"))
 
     // Hilt (KSP)
     implementation(libs.hilt.android)
@@ -48,6 +50,7 @@ dependencies {
     implementation(libs.retrofit.moshi)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit.converter.gson)
 
     // JSON
     implementation(libs.moshi.kotlin)

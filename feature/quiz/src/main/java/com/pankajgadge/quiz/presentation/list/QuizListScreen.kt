@@ -1,4 +1,4 @@
-package com.pankajgadge.quiz.presentation
+package com.pankajgadge.quiz.presentation.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pankajgadge.common.result.Result
 import com.pankajgadge.domain.model.Quiz
-import com.pankajgadge.quiz.model.QuizViewModel
+import com.pankajgadge.quiz.presentation.model.QuizViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,7 +1,5 @@
 package com.pankajgadge.impl.datasource
 
-import com.pankajgadge.api.StudentApi
-import com.pankajgadge.api.model.Student
 import kotlinx.coroutines.delay
 
 class FakeStudentApi : StudentApi {
@@ -14,3 +12,4 @@ class FakeStudentApi : StudentApi {
         )
     }
 }
+

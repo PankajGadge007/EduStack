@@ -1,6 +1,7 @@
 package com.pankajgadge.impl.di
 
-import com.pankajgadge.api.repository.QuizRepository
+import com.pankajgadge.api.RetrofitQualifier
+import com.pankajgadge.api.repository.QuizRepositoryApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,5 +20,5 @@ abstract class RetrofitRepositoryModule {
     @RetrofitQualifier  // Custom qualifier
     abstract fun bindRetrofitQuizRepository(
         impl: RetrofitQuizRepositoryImpl
-    ): QuizRepository
+    ): QuizRepositoryApi
 }
