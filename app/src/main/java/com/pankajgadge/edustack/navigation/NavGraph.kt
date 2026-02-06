@@ -20,10 +20,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pankajgadge.edustack.ui.screens.dashboard.DashboardScreen
-import com.pankajgadge.auth.presentation.login.LoginScreen
-import com.pankajgadge.auth.presentation.login.LoginViewModel
-import com.pankajgadge.quiz.presentation.detail.QuizDetailScreen
-import com.pankajgadge.quiz.presentation.list.QuizListScreen
+import com.pankajgadge.edustack.ui.screens.login.LoginScreen
+import com.pankajgadge.edustack.viewmodel.LoginViewModel
+import com.pankajgadge.quiz.presentation.QuizDetailScreen
+import com.pankajgadge.quiz.presentation.QuizListScreen
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
@@ -97,29 +97,20 @@ fun NavGraph(
             )
         }
 
-        // Practical List Screen (Placeholder)
-        composable(Screen.PracticalList.route) {
-            PlaceholderScreen(
-                title = "IT Practicals",
-                message = "Coming Soon!",
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        // Help Screen (Placeholder)
-        composable(Screen.Help.route) {
-            PlaceholderScreen(
-                title = "Help",
-                message = "Help documentation coming soon!",
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
         // Quiz Detail Screen
         composable(Screen.QuizDetail.route) { backStackEntry ->
             val quizId = backStackEntry.arguments?.getString("quizId") ?: return@composable
             QuizDetailScreen(
                 quizId = quizId,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        // Practical List Screen (Placeholder)
+        composable(Screen.PracticalList.route) {
+            PlaceholderScreen(
+                title = "IT Practicals",
+                message = "Coming Soon!",
                 onBackClick = { navController.popBackStack() }
             )
         }
@@ -133,6 +124,14 @@ fun NavGraph(
             )
         }
 
+        // Help Screen (Placeholder)
+        composable(Screen.Help.route) {
+            PlaceholderScreen(
+                title = "Help",
+                message = "Help documentation coming soon!",
+                onBackClick = { navController.popBackStack() }
+            )
+        }
     }
 }
 

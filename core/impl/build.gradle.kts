@@ -38,8 +38,6 @@ dependencies {
 
     implementation(project(":security"))
     implementation(project(":core:api"))
-    implementation(project(":core:domain"))
-    implementation(project(":feature:auth"))
 
     // Hilt (KSP)
     implementation(libs.hilt.android)

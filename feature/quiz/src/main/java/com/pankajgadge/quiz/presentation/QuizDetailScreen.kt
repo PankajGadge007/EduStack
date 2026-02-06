@@ -1,4 +1,4 @@
-package com.pankajgadge.quiz.presentation.detail
+package com.pankajgadge.quiz.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,8 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pankajgadge.common.result.Result
 import com.pankajgadge.domain.model.Question
-import com.pankajgadge.quiz.presentation.model.QuizViewModel
-import com.pankajgadge.quiz.presentation.result.QuizResult
+import com.pankajgadge.quiz.model.QuizViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +54,7 @@ fun QuizDetailScreen(
                 is Result.Success -> {
                     when (val submit = submitState) {
                         is Result.Success -> {
-                            QuizResult(
+                            ResultScreen(
                                 score = submit.data,
                                 onBackClick = onBackClick
                             )
@@ -194,3 +193,32 @@ private fun QuestionItem(
     }
 }
 
+@Composable
+private fun ResultScreen(
+    score: Int,
+    onBackClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Quiz Completed!",
+            style = MaterialTheme.typography.headlineLarge
+        )
+        Text(
+            text = "Your Score: $score",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        Button(
+            onClick = onBackClick,
+            modifier = Modifier.padding(top = 32.dp)
+        ) {
+            Text("Back to Quizzes")
+        }
+    }
+}

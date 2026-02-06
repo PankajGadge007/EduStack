@@ -1,4 +1,4 @@
-package com.pankajgadge.impl.datasource
+package com.pankajgadge.api.model
 
 data class Student(
     val id: String,

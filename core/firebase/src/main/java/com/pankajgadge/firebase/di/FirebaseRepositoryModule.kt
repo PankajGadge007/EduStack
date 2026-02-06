@@ -1,7 +1,7 @@
 package com.pankajgadge.firebase.di
 
-import com.pankajgadge.domain.repository.AuthRepository
-import com.pankajgadge.domain.repository.QuizRepository
+import com.pankajgadge.api.repository.AuthRepository
+import com.pankajgadge.api.repository.QuizRepository
 import com.pankajgadge.firebase.repository.FirebaseAuthRepositoryImpl
 import com.pankajgadge.firebase.repository.FirebaseQuizRepositoryImpl
 import dagger.Binds

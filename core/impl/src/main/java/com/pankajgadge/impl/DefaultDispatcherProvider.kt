@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class DefaultDispatcherProvider @Inject constructor() : DispatcherProvider {
-    val io = Dispatchers.IO
-    val main = Dispatchers.Main
-    val default = Dispatchers.Default
+    override val io = Dispatchers.IO
+    override val main = Dispatchers.Main
+    override val default = Dispatchers.Default
 }

@@ -2,9 +2,9 @@ package com.pankajgadge.firebase.repository
 
 
 import com.google.firebase.auth.FirebaseAuth
+import com.pankajgadge.api.repository.QuizRepository
 import com.pankajgadge.common.result.Result
 import com.pankajgadge.domain.model.Quiz
-import com.pankajgadge.domain.repository.QuizRepository
 import com.pankajgadge.firebase.datasource.FirebaseQuizDataSource
 import com.pankajgadge.firebase.mapper.QuizMapper
 import kotlinx.coroutines.flow.Flow

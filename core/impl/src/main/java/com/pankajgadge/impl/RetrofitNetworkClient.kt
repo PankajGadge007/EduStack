@@ -1,10 +1,12 @@
 package com.pankajgadge.impl
 
 import com.pankajgadge.api.NetworkClient
+import com.pankajgadge.edustack.security.SecureStore
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton

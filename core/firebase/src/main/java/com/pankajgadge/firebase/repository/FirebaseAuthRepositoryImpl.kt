@@ -1,6 +1,6 @@
 package com.pankajgadge.firebase.repository
 
-import com.pankajgadge.domain.repository.AuthRepository
+import com.pankajgadge.api.repository.AuthRepository
 import com.pankajgadge.common.auth.AuthResult
 import com.pankajgadge.common.auth.UserInfo
 import com.pankajgadge.firebase.datasource.FirebaseAuthDataSource

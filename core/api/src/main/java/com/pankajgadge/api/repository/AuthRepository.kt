@@ -1,4 +1,4 @@
-package com.pankajgadge.domain.repository
+package com.pankajgadge.api.repository
 
 import com.pankajgadge.common.auth.AuthResult
 import com.pankajgadge.common.auth.UserInfo

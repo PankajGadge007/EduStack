@@ -1,6 +1,6 @@
 package com.pankajgadge.api.logging
 
 interface Logger {
-    fun d(message: String)
-    fun e(throwable: Throwable, message: String)
+    fun d(tag: String, message: String)
+    fun e(tag: String,throwable: Throwable, message: String)
 }

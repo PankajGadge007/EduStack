@@ -1,14 +1,14 @@
 package com.pankajgadge.impl.di
 
 
+import com.pankajgadge.api.StudentApi
+import com.pankajgadge.api.auth.TokenProvider
+import com.pankajgadge.api.logging.Logger
 import com.pankajgadge.impl.datasource.FakeStudentApi
+import com.pankajgadge.impl.logging.TimberLogger
 import com.pankajgadge.impl.network.JwtInterceptor
 import com.pankajgadge.impl.network.OkHttpProvider
 import com.pankajgadge.impl.network.RetrofitProvider
-import com.pankajgadge.impl.datasource.StudentApi
-import com.pankajgadge.api.auth.TokenProvider
-import com.pankajgadge.api.logging.Logger
-import com.pankajgadge.impl.logging.TimberLogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.pankajgadge.practical.presentation
+package com.pankajgadge.edustack.navigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

@@ -72,20 +72,18 @@ android {
 }
 
 dependencies {
-    // Core Modules (Contains Reusable infrastructure)
+    // Modules
     implementation(project(":core:api"))
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
     implementation(project(":core:firebase"))
     implementation(project(":core:ui"))
-    implementation(project(":security"))
-    implementation(project(":designsystem"))
-
-    // Feature Modules (Each feature has: Data, Domain, Presentation (including ViewModels))
     implementation(project(":feature:auth"))
     implementation(project(":feature:quiz"))
     implementation(project(":feature:practical"))
     implementation(project(":feature:help"))
+    implementation(project(":security"))
+    implementation(project(":designsystem"))
 
     // Core
     implementation(libs.androidx.core.ktx)

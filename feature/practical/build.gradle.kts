@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -36,13 +35,6 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-
-    // Compose
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
-
 //    implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

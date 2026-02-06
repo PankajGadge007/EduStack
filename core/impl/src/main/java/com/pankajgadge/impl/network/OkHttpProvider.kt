@@ -14,7 +14,7 @@ object OkHttpProvider {
     ): OkHttpClient {
 
         val loggingInterceptor = HttpLoggingInterceptor {
-            logger.d(it)
+            logger.d(it,"")
         }.apply {
             level = HttpLoggingInterceptor.Level.BODY
         }

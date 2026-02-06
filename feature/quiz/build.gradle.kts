@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
-
 }
 
 android {
@@ -54,12 +53,6 @@ dependencies {
 
     // Lifecycle
     implementation(libs.bundles.lifecycle)
-
-    // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
