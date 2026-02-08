@@ -1,8 +1,7 @@
 package com.pankajgadge.quiz.domain
 
-import com.pankajgadge.common.result.Result
-import com.pankajgadge.domain.model.Quiz
-import com.pankajgadge.domain.repository.QuizRepository
+import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.domain.repository.QuizRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

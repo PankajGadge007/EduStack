@@ -2,12 +2,11 @@ package com.pankajgadge.auth.data.repository
 
 
 import com.pankajgadge.common.auth.AuthResult
-import com.pankajgadge.domain.model.User
-import com.pankajgadge.domain.repository.AuthRepository
-import com.pankajgadge.common.result.Result
+import com.pankajgadge.core.domain.model.User
+import com.pankajgadge.core.domain.repository.AuthRepository
 import com.pankajgadge.common.result.errorResult
 import com.pankajgadge.common.result.successResult
-import com.pankajgadge.domain.model.UserRole
+import com.pankajgadge.core.domain.model.UserRole
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 

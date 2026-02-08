@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pankajgadge.common.result.Result
-import com.pankajgadge.domain.model.Quiz
+import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.quiz.model.QuizViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

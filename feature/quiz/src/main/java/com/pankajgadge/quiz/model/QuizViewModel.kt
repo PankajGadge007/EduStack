@@ -2,10 +2,10 @@ package com.pankajgadge.quiz.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pankajgadge.api.repository.QuizRepository
-import com.pankajgadge.common.result.Result
-import com.pankajgadge.domain.model.Quiz
-import com.pankajgadge.firebase.di.FirebaseQuiz
+import com.pankajgadge.core.api.repository.QuizRepository
+import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.common.result.Result
+import com.pankajgadge.core.firebase.di.FirebaseQuiz
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

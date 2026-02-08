@@ -61,14 +61,14 @@ import kotlinx.coroutines.launch
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var isSignUp by remember { mutableStateOf(false) }
 
-    val loginState by viewModel.loginState.collectAsState()
+    val loginState by loginViewModel.loginState.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(loginState) {
@@ -156,9 +156,9 @@ fun LoginScreen(
                 Button(
                     onClick = {
                         if (isSignUp) {
-                            viewModel.signUp(email, password, name)
+                            loginViewModel.signUp(email, password, name)
                         } else {
-                            viewModel.signIn(email, password)
+                            loginViewModel.signIn(email, password)
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -199,7 +199,7 @@ fun LoginScreen(
                     // Google Sign-In button
                     GoogleSignInButton(
                         onClick = {
-                            handleGoogleSignIn(context, viewModel)
+                            handleGoogleSignIn(context, loginViewModel)
                         },
                         isLoading = loginState is LoginState.Loading
                     )
@@ -208,7 +208,7 @@ fun LoginScreen(
                 TextButton(
                     onClick = {
                         isSignUp = !isSignUp
-                        viewModel.resetState()
+                        loginViewModel.resetState()
                     }
                 ) {
                     Text(
@@ -260,8 +260,6 @@ private fun handleGoogleSignIn(
 ) {
     val credentialManager = CredentialManager.create(context)
 
-    // TODO: Replace with your actual Web Client ID from google-services.json
-    // Find it in google-services.json -> oauth_client -> client_type: 3
     val webClientId = "612827265822-ar1jn4eqdvrf58jrqbvbg9ec5q37tml7.apps.googleusercontent.com"
 
     val googleIdOption = GetGoogleIdOption.Builder()

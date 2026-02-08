@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.pankajgadge.database"
+    namespace = "com.pankajgadge.core.database"
     compileSdk = 36
 
     defaultConfig {

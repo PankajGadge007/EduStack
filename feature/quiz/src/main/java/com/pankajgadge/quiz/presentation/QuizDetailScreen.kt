@@ -10,8 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pankajgadge.common.result.Result
-import com.pankajgadge.domain.model.Question
+import com.pankajgadge.core.domain.model.Question
+import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.quiz.model.QuizViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -88,7 +89,7 @@ fun QuizDetailScreen(
 
 @Composable
 private fun QuizContent(
-    quiz: com.pankajgadge.domain.model.Quiz,
+    quiz: Quiz,
     answers: Map<String, Int>,
     onAnswerSelected: (String, Int) -> Unit,
     onSubmit: () -> Unit,

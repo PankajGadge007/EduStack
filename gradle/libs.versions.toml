@@ -12,7 +12,7 @@ activity-compose = "1.12.2"
 
 # Compose
 composeBom = "2026.01.00"
-material = "1.13.0"
+materialVersion = "1.13.0"
 composeCompiler = "1.5.15"
 
 # Firebase
@@ -55,7 +55,7 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 
-#material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 # Google Sign-In and Identity
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 androidx-credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }

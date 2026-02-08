@@ -2,7 +2,7 @@ package com.pankajgadge.edustack.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pankajgadge.domain.repository.AuthRepository
+import com.pankajgadge.core.domain.repository.AuthRepository
 import com.pankajgadge.auth.domain.usecase.GoogleSignInUseCase
 import com.pankajgadge.common.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel

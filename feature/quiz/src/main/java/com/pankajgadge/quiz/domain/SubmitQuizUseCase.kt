@@ -1,7 +1,6 @@
 package com.pankajgadge.quiz.domain
 
-import com.pankajgadge.common.result.Result
-import com.pankajgadge.domain.repository.QuizRepository
+import com.pankajgadge.core.domain.repository.QuizRepository
 import javax.inject.Inject
 
 class SubmitQuizUseCase @Inject constructor(

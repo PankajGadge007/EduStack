@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.pankajgadge.impl"
+    namespace = "com.pankajgadge.core.impl"
     compileSdk = 36
 
     defaultConfig {
