@@ -1,17 +1,25 @@
 package com.pankajgadge.common.auth
 
+/**
+ * Sealed class representing authentication operation results
+ * Used across all authentication features
+ */
 sealed class AuthResult {
-    data class Success(
-        val userId: String,
-        val email: String,
-        val displayName: String
-    ) : AuthResult()
+    /**
+     * Successful authentication operation
+     * @param displayName User's display name to show in UI
+     */
+    data class Success(val displayName: String) : AuthResult()
 
+    /**
+     * Failed authentication operation
+     * @param message Error message to display to user
+     */
     data class Error(val message: String) : AuthResult()
-}
 
-data class UserInfo(
-    val userId: String,
-    val email: String,
-    val displayName: String
-)
+    /**
+     * Informational message (non-error)
+     * @param info Information message to display to user
+     */
+    data class Info(val info: String) : AuthResult()
+}

@@ -1,5 +1,6 @@
 package com.pankajgadge.edustack.navigation
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.pankajgadge.auth.presentation.forgotpassword.ForgotPasswordScreen
 import com.pankajgadge.edustack.ui.screens.dashboard.DashboardScreen
 import com.pankajgadge.edustack.ui.screens.login.LoginScreen
 import com.pankajgadge.edustack.viewmodel.LoginViewModel
@@ -39,6 +41,7 @@ sealed class Screen(val route: String) {
     }
 
     object Help : Screen("help")
+    object ForgotPassword : Screen("forgot_password")
 }
 
 @Composable
@@ -66,8 +69,21 @@ fun NavGraph(
             LoginScreen(
                 onLoginSuccess = {
                     navController.navigate(Screen.Dashboard.route) {
+                        // remove LoginScreen from stack after successful Login
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }
+                },
+                onNavigateToForgotPassword = {
+                    navController.navigate(Screen.ForgotPassword.route)
+                }
+            )
+        }
+
+        // Add this route
+        composable(Screen.ForgotPassword.route) {
+            ForgotPasswordScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }

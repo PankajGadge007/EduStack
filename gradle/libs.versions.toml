@@ -26,6 +26,11 @@ hilt-navigation-compose = "1.2.0"
 # Database
 room = "2.6.1"
 
+# Google & Credentials versions
+playServicesAuth = "20.7.0"
+credentials = "1.2.0"
+googleid = "1.1.0"
+
 # Networking
 retrofit = "2.9.0"
 okhttp = "4.12.0"
@@ -51,6 +56,11 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 
 #material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+# Google Sign-In and Identity
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+androidx-credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
+androidx-credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 # Compose
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
@@ -131,6 +141,14 @@ lifecycle = [
     "androidx-lifecycle-runtime-ktx",
     "androidx-lifecycle-viewmodel-ktx",
     "androidx-lifecycle-runtime-compose"
+]
+
+# Optional: Group them so you only have to add one line to your build.gradle
+google-auth = [
+    "play-services-auth",
+    "androidx-credentials",
+    "androidx-credentials-play-services-auth",
+    "googleid"
 ]
 
 retrofit = [

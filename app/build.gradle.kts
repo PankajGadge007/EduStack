@@ -108,6 +108,15 @@ dependencies {
     implementation(libs.bundles.firebase)
 //    implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
 
+    // if you are using Bundle
+//    implementation(libs.bundles.google.auth)
+
+    // else using Individual Implementations - If you prefer to list them out separately for clarity
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler.ksp)
