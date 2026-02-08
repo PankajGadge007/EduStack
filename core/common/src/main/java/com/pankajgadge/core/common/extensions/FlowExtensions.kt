@@ -1,6 +1,6 @@
 package com.pankajgadge.core.common.extensions
 
-import com.pankajgadge.common.result.Result
+import com.pankajgadge.core.common.result.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

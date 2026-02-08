@@ -1,6 +1,7 @@
 package com.pankajgadge.core.api.repository
 
-import com.pankajgadge.database.dao.QuizDao
+import com.pankajgadge.core.database.dao.QuizDao
+import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.core.domain.model.Quiz
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

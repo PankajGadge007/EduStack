@@ -5,9 +5,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.pankajgadge.core.api.repository.QuizRepository
 import com.pankajgadge.core.domain.repository.AuthRepository
-import com.pankajgadge.firebase.auth.FirebaseAuthRepositoryImpl
+import com.pankajgadge.core.firebase.auth.FirebaseAuthRepositoryImpl
 import com.pankajgadge.core.firebase.datasource.FirebaseAuthDataSource
-import com.pankajgadge.firebase.repository.FirebaseQuizRepositoryImpl
+import com.pankajgadge.core.firebase.repository.FirebaseQuizRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
 package com.pankajgadge.auth.domain.usecase
 
-import com.pankajgadge.common.auth.AuthResult
+import com.pankajgadge.core.common.auth.AuthResult
 import com.pankajgadge.core.domain.repository.AuthRepository
 import javax.inject.Inject
 

@@ -3,7 +3,7 @@ package com.pankajgadge.auth.presentation.forgotpassword
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pankajgadge.auth.domain.usecase.ForgotPasswordUseCase
-import com.pankajgadge.common.auth.AuthResult
+import com.pankajgadge.core.common.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

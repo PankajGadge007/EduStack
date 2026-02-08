@@ -1,6 +1,6 @@
 package com.pankajgadge.core.impl.network
 
-import com.pankajgadge.api.auth.TokenProvider
+import com.pankajgadge.core.api.auth.TokenProvider
 import okhttp3.Interceptor
 import okhttp3.Response
 

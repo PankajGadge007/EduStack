@@ -3,7 +3,7 @@ package com.pankajgadge.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.pankajgadge.database.dao.QuizDao
+import com.pankajgadge.core.database.dao.QuizDao
 import com.pankajgadge.core.database.entity.QuestionEntity
 import com.pankajgadge.core.database.entity.QuizEntity
 

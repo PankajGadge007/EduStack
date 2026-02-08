@@ -1,6 +1,6 @@
 package com.pankajgadge.core.firebase.auth
 
-import com.pankajgadge.common.auth.AuthResult
+import com.pankajgadge.core.common.auth.AuthResult
 import com.pankajgadge.core.domain.repository.AuthRepository
 import com.pankajgadge.core.firebase.datasource.FirebaseAuthDataSource
 import javax.inject.Inject
