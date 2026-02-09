@@ -1,5 +1,6 @@
 package com.pankajgadge.core.domain.repository
 
+import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.core.domain.model.Quiz
 import kotlinx.coroutines.flow.Flow
 

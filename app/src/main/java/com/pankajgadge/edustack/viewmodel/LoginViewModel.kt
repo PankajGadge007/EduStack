@@ -2,9 +2,9 @@ package com.pankajgadge.edustack.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pankajgadge.core.domain.repository.AuthRepository
 import com.pankajgadge.auth.domain.usecase.GoogleSignInUseCase
-import com.pankajgadge.core.common.auth.AuthResult
+import com.pankajgadge.core.domain.auth.AuthResult
+import com.pankajgadge.core.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,11 +36,12 @@ class LoginViewModel @Inject constructor(
                     _loginState.value = LoginState.Success(result.displayName)
                     _isLoggedIn.value = true
                 }
+
                 is AuthResult.Error -> {
                     _loginState.value = LoginState.Error(result.message)
                 }
 
-                is AuthResult.Info ->{
+                is AuthResult.Info -> {
                     _loginState.value = LoginState.Error(result.info)
                 }
             }
@@ -59,10 +60,12 @@ class LoginViewModel @Inject constructor(
                     _loginState.value = LoginState.Success(result.displayName)
                     _isLoggedIn.value = true
                 }
+
                 is AuthResult.Error -> {
                     _loginState.value = LoginState.Error(result.message)
                 }
-                is AuthResult.Info ->{
+
+                is AuthResult.Info -> {
                     _loginState.value = LoginState.Error(result.info)
                 }
             }
@@ -82,6 +85,7 @@ class LoginViewModel @Inject constructor(
                     _loginState.value = LoginState.Success(result.displayName)
                     _isLoggedIn.value = true
                 }
+
                 is AuthResult.Error -> {
                     _loginState.value = LoginState.Error(result.message)
                 }

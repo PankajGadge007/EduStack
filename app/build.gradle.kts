@@ -82,6 +82,7 @@ dependencies {
     implementation(project(":feature:quiz"))
     implementation(project(":feature:practical"))
     implementation(project(":feature:help"))
+    implementation(project(":feature:user"))
     implementation(project(":security"))
     implementation(project(":designsystem"))
 

@@ -1,7 +1,7 @@
 package com.pankajgadge.core.impl.di
 
 
-import com.pankajgadge.core.api.StudentApi
+import com.pankajgadge.core.impl.network.StudentApi
 import com.pankajgadge.core.api.auth.TokenProvider
 import com.pankajgadge.core.api.logging.Logger
 import com.pankajgadge.core.impl.datasource.FakeStudentApi

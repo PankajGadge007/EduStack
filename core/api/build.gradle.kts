@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
+//    alias(libs.plugins.hilt)
+//    alias(libs.plugins.ksp)
 }
 
 android {
@@ -36,7 +36,6 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":core:domain"))
     implementation(project(":core:database"))
 
     // Network
@@ -46,8 +45,8 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
 
     // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler.ksp)
+//    implementation(libs.hilt.android)
+//    ksp(libs.hilt.compiler.ksp)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

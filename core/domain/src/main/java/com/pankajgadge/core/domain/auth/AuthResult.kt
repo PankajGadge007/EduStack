@@ -1,4 +1,4 @@
-package com.pankajgadge.core.common.auth
+package com.pankajgadge.core.domain.auth
 
 /**
  * Sealed class representing authentication operation results

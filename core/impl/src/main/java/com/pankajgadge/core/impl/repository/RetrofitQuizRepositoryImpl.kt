@@ -1,20 +1,20 @@
-package com.pankajgadge.core.api.repository
+package com.pankajgadge.core.impl.repository
 
-import com.pankajgadge.core.database.dao.QuizDao
+import com.pankajgadge.core.impl.network.RetrofitQuizApiService
 import com.pankajgadge.core.common.result.Result
+import com.pankajgadge.core.database.dao.QuizDao
+import com.pankajgadge.core.database.dto.QuizDto
+import com.pankajgadge.core.domain.model.Question
 import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.domain.repository.QuizRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
-import com.pankajgadge.core.api.network.QuizApiService
-import com.pankajgadge.core.database.dto.QuizDto
-import com.pankajgadge.core.domain.model.Question
-
-
-class QuizRepositoryImpl @Inject constructor(
-    private val api: QuizApiService,
+@Singleton
+class RetrofitQuizRepositoryImpl @Inject constructor(
+    private val api: RetrofitQuizApiService,
     private val quizDao: QuizDao
 ) : QuizRepository {
 

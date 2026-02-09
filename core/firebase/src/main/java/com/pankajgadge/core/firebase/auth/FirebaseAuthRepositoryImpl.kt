@@ -1,6 +1,7 @@
 package com.pankajgadge.core.firebase.auth
 
-import com.pankajgadge.core.common.auth.AuthResult
+import android.util.Patterns
+import com.pankajgadge.core.domain.auth.AuthResult
 import com.pankajgadge.core.domain.repository.AuthRepository
 import com.pankajgadge.core.firebase.datasource.FirebaseAuthDataSource
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
             if (password.isBlank()) {
                 return AuthResult.Error("Password cannot be empty")
             }
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 return AuthResult.Error("Please enter a valid email address")
             }
 
@@ -56,7 +57,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
             if (name.isBlank()) {
                 return AuthResult.Error("Name cannot be empty")
             }
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 return AuthResult.Error("Please enter a valid email address")
             }
             if (password.length < 6) {
@@ -111,7 +112,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
             if (email.isBlank()) {
                 return AuthResult.Error("Email cannot be empty")
             }
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 return AuthResult.Error("Please enter a valid email address")
             }
 
@@ -199,7 +200,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
             if (newEmail.isBlank()) {
                 return AuthResult.Error("Email cannot be empty")
             }
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
                 return AuthResult.Error("Please enter a valid email address")
             }
 

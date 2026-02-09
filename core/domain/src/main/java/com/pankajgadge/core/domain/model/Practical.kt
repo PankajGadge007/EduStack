@@ -1,4 +1,4 @@
-package com.pankajgadge.coredomain.model
+package com.pankajgadge.core.domain.model
 
 data class Practical(
     val id: String,

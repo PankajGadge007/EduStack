@@ -4,8 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.pankajgadge.core.common.result.Result
-import com.pankajgadge.core.common.result.errorResult
-import com.pankajgadge.core.common.result.successResult
 import com.pankajgadge.core.domain.model.*
 import com.pankajgadge.core.domain.repository.UserProfileRepository
 import kotlinx.coroutines.tasks.await
@@ -54,15 +52,15 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
                     .set(defaultProfile.toFirestoreMap())
                     .await()
 
-                return successResult(defaultProfile)
+                return Result.Success(defaultProfile)
             }
 
-            val data = docSnapshot.data ?: return errorResult("Profile data is null")
+            val data = docSnapshot.data ?: return Result.Error(Exception("Profile data is null"))
             val profile = data.toUserProfile(userId)
 
-            successResult(profile)
+            Result.Success(profile)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 
@@ -73,9 +71,9 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
                 .set(userProfile.toFirestoreMap())
                 .await()
 
-            successResult(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 
@@ -96,9 +94,9 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
                 }
             }
 
-            successResult(results)
+            Result.Success(results)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 
@@ -119,7 +117,7 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
             }
 
             if (results.isEmpty()) {
-                return successResult(QuizStats())
+                return Result.Success(QuizStats())
             }
 
             // Calculate statistics
@@ -132,9 +130,9 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
                 lastQuizDate = results.maxOfOrNull { it.completedAt }
             )
 
-            successResult(stats)
+            Result.Success(stats)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 
@@ -157,9 +155,9 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
             // Update user stats
             updateUserStats(quizResult.userId)
 
-            successResult(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 
@@ -182,9 +180,9 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
                 updateUserStats(userId)
             }
 
-            successResult(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 
@@ -204,9 +202,9 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
                 }
             }
 
-            successResult(profiles)
+            Result.Success(profiles)
         } catch (e: Exception) {
-            errorResult(e)
+            Result.Error(Exception(e))
         }
     }
 

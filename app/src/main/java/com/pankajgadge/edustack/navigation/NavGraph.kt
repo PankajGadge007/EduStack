@@ -25,10 +25,14 @@ import com.pankajgadge.edustack.ui.screens.login.LoginScreen
 import com.pankajgadge.edustack.viewmodel.LoginViewModel
 import com.pankajgadge.quiz.presentation.QuizDetailScreen
 import com.pankajgadge.quiz.presentation.QuizListScreen
+import com.pankajgadge.user.presentation.history.QuizHistoryScreen
+import com.pankajgadge.user.presentation.profile.ProfileScreen
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Dashboard : Screen("dashboard")
+    object Profile : Screen("profile")
+    object QuizHistory : Screen("quiz_history")
     object QuizList : Screen("quiz_list")
     object QuizDetail : Screen("quiz_detail/{quizId}") {
         fun createRoute(quizId: String) = "quiz_detail/$quizId"
@@ -93,11 +97,42 @@ fun NavGraph(
                 onQuizClick = { navController.navigate(Screen.QuizList.route) },
                 onPracticalClick = { navController.navigate(Screen.PracticalList.route) },
                 onHelpClick = { navController.navigate(Screen.Help.route) },
+                onNavigateToProfile = { navController.navigate(Screen.Profile.route) },
+                onNavigateToQuizHistory = { navController.navigate(Screen.QuizHistory.route) },
                 onLogout = {
                     loginViewModel.signOut()
                     navController.navigate(Screen.Login.route) {
                         popUpTo(0) { inclusive = true }
                     }
+                }
+            )
+        }
+
+        // ✅ NEW: Profile Screen
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToQuizHistory = {
+                    navController.navigate(Screen.QuizHistory.route)
+                },
+                onSignOut = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        // ✅ NEW: Quiz History Screen
+        composable(Screen.QuizHistory.route) {
+            QuizHistoryScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onQuizClick = { quizId ->
+                    navController.navigate(Screen.QuizDetail.createRoute(quizId))
                 }
             )
         }

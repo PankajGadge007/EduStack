@@ -46,6 +46,10 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material3)
 
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
+
     // Hilt (KSP)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler.ksp)

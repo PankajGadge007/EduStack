@@ -1,4 +1,4 @@
-package com.pankajgadge.firebase.mapper
+package com.pankajgadge.core.firebase.mapper
 
 class StudentMapper {
 }

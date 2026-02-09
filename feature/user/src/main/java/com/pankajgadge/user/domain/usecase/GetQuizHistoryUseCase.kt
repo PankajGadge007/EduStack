@@ -1,9 +1,9 @@
 package com.pankajgadge.user.domain.usecase
 
 import com.pankajgadge.core.common.result.Result
-import com.pankajgadge.core.common.result.errorResult
 import com.pankajgadge.core.domain.model.QuizResult
 import com.pankajgadge.core.domain.repository.UserProfileRepository
+import java.lang.Exception
 import javax.inject.Inject
 
 /**
@@ -14,11 +14,11 @@ class GetQuizHistoryUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(userId: String, limit: Int = 50): Result<List<QuizResult>> {
         if (userId.isBlank()) {
-            return errorResult("User ID cannot be empty")
+            return Result.Error(Exception("User ID cannot be empty"))
         }
 
         if (limit <= 0) {
-            return errorResult("Limit must be greater than 0")
+            return Result.Error(Exception("Limit must be greater than 0"))
         }
 
         return userProfileRepository.getQuizHistory(userId, limit)

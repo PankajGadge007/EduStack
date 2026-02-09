@@ -1,6 +1,6 @@
 package com.pankajgadge.core.impl.datasource
 
-import com.pankajgadge.core.api.StudentApi
+import com.pankajgadge.core.impl.network.StudentApi
 import com.pankajgadge.core.api.model.Student
 import kotlinx.coroutines.delay
 

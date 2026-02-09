@@ -2,10 +2,9 @@ package com.pankajgadge.quiz.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pankajgadge.core.api.repository.QuizRepository
-import com.pankajgadge.core.domain.model.Quiz
 import com.pankajgadge.core.common.result.Result
-import com.pankajgadge.core.firebase.di.FirebaseQuiz
+import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.domain.repository.QuizRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    @FirebaseQuiz private val quizRepository: QuizRepository
+    private val quizRepository: QuizRepository
 ) : ViewModel() {
 
     private val _quizzesState = MutableStateFlow<Result<List<Quiz>>>(Result.Loading)

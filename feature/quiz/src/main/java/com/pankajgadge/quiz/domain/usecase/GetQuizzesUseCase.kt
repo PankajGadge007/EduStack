@@ -1,6 +1,7 @@
-package com.pankajgadge.quiz.domain
+package com.pankajgadge.quiz.domain.usecase
 
 import com.pankajgadge.core.domain.model.Quiz
+import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.core.domain.repository.QuizRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

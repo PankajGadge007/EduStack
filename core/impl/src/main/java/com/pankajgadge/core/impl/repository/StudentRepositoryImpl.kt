@@ -1,6 +1,6 @@
 package com.pankajgadge.core.impl.repository
 
-import com.pankajgadge.core.api.StudentApi
+import com.pankajgadge.core.impl.network.StudentApi
 import javax.inject.Inject
 
 

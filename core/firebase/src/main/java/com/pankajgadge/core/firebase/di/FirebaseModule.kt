@@ -3,17 +3,18 @@ package com.pankajgadge.core.firebase.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.pankajgadge.core.api.repository.QuizRepository
 import com.pankajgadge.core.domain.repository.AuthRepository
+import com.pankajgadge.core.domain.repository.QuizRepository
+import com.pankajgadge.core.domain.repository.UserProfileRepository
 import com.pankajgadge.core.firebase.auth.FirebaseAuthRepositoryImpl
 import com.pankajgadge.core.firebase.datasource.FirebaseAuthDataSource
 import com.pankajgadge.core.firebase.repository.FirebaseQuizRepositoryImpl
+import com.pankajgadge.core.firebase.repository.FirebaseUserProfileRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 /**
@@ -31,12 +32,12 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
-       return FirebaseAuth.getInstance()
+        return FirebaseAuth.getInstance()
     }
 
     /**
      * Provides FirebaseFirestore instance for database operations
-     * Used for: Reading quizzes, saving submissions
+     * Used for: Reading quizzes, saving submissions, user profiles
      */
     @Provides
     @Singleton
@@ -46,7 +47,7 @@ object FirebaseModule {
 
     /**
      * Provides FirebaseStorage instance for file storage
-     * Used for: Quiz images (future feature)
+     * Used for: Quiz images, profile photos (future feature)
      */
     @Provides
     @Singleton
@@ -67,9 +68,6 @@ object FirebaseModule {
     }
 }
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class FirebaseQuiz
 
 /**
  * Separate module for binding interfaces to implementations
@@ -81,7 +79,6 @@ abstract class FirebaseBindingModule {
 
     @Binds
     @Singleton
-    @FirebaseQuiz
     abstract fun bindFirebaseQuizRepository(
         impl: FirebaseQuizRepositoryImpl
     ): QuizRepository
@@ -95,4 +92,13 @@ abstract class FirebaseBindingModule {
     abstract fun bindAuthRepository(
         impl: FirebaseAuthRepositoryImpl
     ): AuthRepository
+
+    /**
+     * Binds UserProfileRepository interface to FirebaseUserProfileRepositoryImpl
+     */
+    @Binds
+    @Singleton
+    abstract fun bindUserProfileRepository(
+        impl: FirebaseUserProfileRepositoryImpl
+    ): UserProfileRepository
 }

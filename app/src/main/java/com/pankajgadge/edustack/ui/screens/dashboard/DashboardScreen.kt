@@ -1,6 +1,8 @@
 package com.pankajgadge.edustack.ui.screens.dashboard
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -16,6 +18,8 @@ fun DashboardScreen(
     onQuizClick: () -> Unit,
     onPracticalClick: () -> Unit,
     onHelpClick: () -> Unit,
+    onNavigateToProfile: () -> Unit,
+    onNavigateToQuizHistory: () -> Unit,
     onLogout: () -> Unit
 ) {
     Scaffold(
@@ -34,6 +38,7 @@ fun DashboardScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -44,10 +49,26 @@ fun DashboardScreen(
                 modifier = Modifier.padding(vertical = 32.dp)
             )
 
+            // Profile Card
+            ModuleCard(
+                title = "View Profile",
+                description = "View Your Profile",
+                icon = Icons.Default.Person,
+                onClick = onNavigateToProfile
+            )
+
+            // Quiz History Card
+            ModuleCard(
+                title = "Quiz History",
+                description = "Look quizzes history",
+                icon = Icons.Default.History,
+                onClick = onNavigateToQuizHistory
+            )
+
             ModuleCard(
                 title = "Quiz Tests",
                 description = "Take quizzes and test your knowledge",
-                icon = Icons.Default.Quiz,
+                icon = Icons.Default.NoteAlt,
                 onClick = onQuizClick
             )
 

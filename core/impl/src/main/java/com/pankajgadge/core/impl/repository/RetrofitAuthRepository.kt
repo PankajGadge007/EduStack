@@ -1,16 +1,12 @@
-package com.pankajgadge.auth.data.repository
+package com.pankajgadge.core.impl.repository
 
-
-import com.pankajgadge.core.common.auth.AuthResult
-import com.pankajgadge.core.domain.model.User
-import com.pankajgadge.core.domain.repository.AuthRepository
 import com.pankajgadge.core.common.result.Result
-import com.pankajgadge.core.common.result.errorResult
-import com.pankajgadge.core.common.result.successResult
+import com.pankajgadge.core.domain.auth.AuthResult
+import com.pankajgadge.core.domain.model.User
 import com.pankajgadge.core.domain.model.UserRole
+import com.pankajgadge.core.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import javax.inject.Inject
-
 
 /**
  * Fake implementation of AuthRepository for testing or development.
@@ -18,7 +14,7 @@ import javax.inject.Inject
  *
  * This provides mock authentication without needing an actual backend.
  */
-class FakeAuthRepository @Inject constructor() : AuthRepository {
+class RetrofitAuthRepository @Inject constructor() : AuthRepository {
 
     // Simulate in-memory user storage
     private val mockUsers = mutableMapOf<String, MockUserData>()
@@ -53,7 +49,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
 
         return if (mockUser != null && mockUser.password == password) {
             currentUserId = email
-            successResult(
+            Result.Success(
                 User(
                     id = email.hashCode().toString(),
                     email = email,
@@ -63,7 +59,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
             )
         } else if (email == "test@example.com" && password == "password123") {
             currentUserId = email
-            successResult(
+            Result.Success(
                 User(
                     id = "test_user_123",
                     email = email,
@@ -72,7 +68,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
                 )
             )
         } else {
-            errorResult("Invalid email or password")
+            Result.Error(Exception("Invalid email or password"))
         }
     }
 
@@ -85,25 +81,25 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
         delay(1000)
 
         if (email.isEmpty() || !email.contains("@")) {
-            return errorResult("Invalid email address")
+            return Result.Error(Exception("Invalid email address"))
         }
 
         if (password.length < 6) {
-            return errorResult("Password must be at least 6 characters")
+            return Result.Error(Exception("Password must be at least 6 characters"))
         }
 
         if (name.isEmpty()) {
-            return errorResult("Name cannot be empty")
+            return Result.Error(Exception("Name cannot be empty"))
         }
 
         if (mockUsers.containsKey(email)) {
-            return errorResult("Email already registered")
+            return Result.Error(Exception("Email already registered"))
         }
 
         mockUsers[email] = MockUserData(email, password, name, role)
         currentUserId = email
 
-        return successResult(
+        return Result.Success(
             User(
                 id = email.hashCode().toString(),
                 email = email,
@@ -116,7 +112,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
     suspend fun logout(): Result<Unit> {
         delay(500)
         currentUserId = null
-        return successResult(Unit)
+        return Result.Success(Unit)
     }
 
     override fun isLoggedIn(): Boolean {
@@ -132,12 +128,12 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
 //
 //        val userId = currentUserId
 //        if (userId == null) {
-//            return successResult(null)
+//            return Result.Success(null)
 //        }
 //
 //        val mockUser = mockUsers[userId]
 //        return if (mockUser != null) {
-//            successResult(
+//            Result.Success(
 //                User(
 //                    id = userId.hashCode().toString(),
 //                    email = mockUser.email,
@@ -146,7 +142,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
 //                )
 //            )
 //        } else {
-//            successResult(null)
+//            Result.Success(null)
 //        }
 //    }
 
@@ -155,17 +151,16 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
     }
 
 
-
     // ✅ Forgot Password Implementation
     override suspend fun sendPasswordResetEmail(email: String): AuthResult {
         delay(1500)
 
 //        return when {
-//            email.isEmpty() -> errorResult("Email cannot be empty")
-//            !email.contains("@") -> errorResult("Invalid email format")
+//            email.isEmpty() -> Result.Error(Exception("Email cannot be empty")
+//            !email.contains("@") -> Result.Error(Exception("Invalid email format")
 //            else -> {
 //                // Simulate successful email sent
-//                successResult(Unit)
+//                Result.Success(Unit)
 //            }
 //        }
         return TODO("Provide the return value")
@@ -174,16 +169,16 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
     suspend fun verifyResetCode(code: String): Result<Boolean> {
         delay(1000)
         // Fake implementation - codes starting with "RESET" are valid
-        return successResult(code.startsWith("RESET"))
+        return Result.Success(code.startsWith("RESET"))
     }
 
     suspend fun resetPasswordWithCode(code: String, newPassword: String): Result<Unit> {
         delay(1500)
 
         return when {
-            newPassword.length < 6 -> errorResult("Password must be at least 6 characters")
-            !code.startsWith("RESET") -> errorResult("Invalid or expired reset code")
-            else -> successResult(Unit)
+            newPassword.length < 6 -> Result.Error(Exception("Password must be at least 6 characters"))
+            !code.startsWith("RESET") -> Result.Error(Exception("Invalid or expired reset code"))
+            else -> Result.Success(Unit)
         }
     }
 
@@ -193,7 +188,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
 
 //        return if (idToken.isNotEmpty()) {
 //            currentUserId = "google_user_${System.currentTimeMillis()}"
-//            successResult(
+//            Result.Success(
 //                User(
 //                    id = currentUserId!!,
 //                    email = "google.user@example.com",
@@ -202,7 +197,7 @@ class FakeAuthRepository @Inject constructor() : AuthRepository {
 //                )
 //            )
 //        } else {
-//            errorResult("Invalid Google token")
+//            Result.Error(Exception("Invalid Google token"))
 //        }
         return TODO("Provide the return value")
     }

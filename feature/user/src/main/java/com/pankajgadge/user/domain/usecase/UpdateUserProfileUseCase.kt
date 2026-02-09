@@ -1,7 +1,6 @@
 package com.pankajgadge.user.domain.usecase
 
 import com.pankajgadge.core.common.result.Result
-import com.pankajgadge.core.common.result.errorResult
 import com.pankajgadge.core.domain.model.UserProfile
 import com.pankajgadge.core.domain.repository.UserProfileRepository
 import javax.inject.Inject
@@ -15,15 +14,15 @@ class UpdateUserProfileUseCase @Inject constructor(
     suspend operator fun invoke(userProfile: UserProfile): Result<Unit> {
         // Validate profile data
         if (userProfile.name.isBlank()) {
-            return errorResult("Name cannot be empty")
+            return Result.Error(Exception("Name cannot be empty"))
         }
 
         if (userProfile.email.isBlank()) {
-            return errorResult("Email cannot be empty")
+            return Result.Error(Exception("Email cannot be empty"))
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userProfile.email).matches()) {
-            return errorResult("Invalid email format")
+            return Result.Error(Exception("Invalid email format"))
         }
 
         return userProfileRepository.updateUserProfile(userProfile)

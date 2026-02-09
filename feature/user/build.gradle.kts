@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -42,10 +43,20 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
+
     // Hilt (KSP)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler.ksp)
     implementation(libs.hilt.navigation.compose)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.bundles.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

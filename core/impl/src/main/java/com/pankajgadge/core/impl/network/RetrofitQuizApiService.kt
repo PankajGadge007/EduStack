@@ -1,4 +1,4 @@
-package com.pankajgadge.core.api.network
+package com.pankajgadge.core.impl.network
 
 import com.pankajgadge.core.database.dto.QuizDto
 import retrofit2.http.Body
@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-interface QuizApiService {
+interface RetrofitQuizApiService {
     @GET("quizzes")
     suspend fun getQuizzes(): List<QuizDto>
 

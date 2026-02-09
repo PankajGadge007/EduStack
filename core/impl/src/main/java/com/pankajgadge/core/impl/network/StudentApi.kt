@@ -1,4 +1,4 @@
-package com.pankajgadge.core.api
+package com.pankajgadge.core.impl.network
 
 import com.pankajgadge.core.api.model.Student
 

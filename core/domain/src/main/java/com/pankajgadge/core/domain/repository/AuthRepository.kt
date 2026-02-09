@@ -1,6 +1,6 @@
 package com.pankajgadge.core.domain.repository
 
-import com.pankajgadge.core.common.auth.AuthResult
+import com.pankajgadge.core.domain.auth.AuthResult
 
 /**
  * Authentication repository interface
