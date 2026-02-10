@@ -1,6 +1,6 @@
 package com.pankajgadge.core.impl
 
-import com.pankajgadge.core.api.NetworkClient
+import com.pankajgadge.core.impl.network.NetworkClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

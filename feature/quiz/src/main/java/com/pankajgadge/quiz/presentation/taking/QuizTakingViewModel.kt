@@ -2,7 +2,6 @@ package com.pankajgadge.quiz.presentation.taking
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.core.domain.model.Question
 import com.pankajgadge.core.domain.model.Quiz
@@ -10,6 +9,7 @@ import com.pankajgadge.core.domain.model.QuizSubmission
 import com.pankajgadge.core.domain.model.SubmitQuizRequest
 import com.pankajgadge.core.domain.model.SubmitQuizResponse
 import com.pankajgadge.core.domain.model.SubmittedAnswer
+import com.pankajgadge.core.domain.repository.AuthSessionRepository
 import com.pankajgadge.quiz.domain.usecase.GetQuizByIdUseCase
 import com.pankajgadge.quiz.domain.usecase.SubmitQuizUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +30,7 @@ import javax.inject.Inject
 class QuizTakingViewModel @Inject constructor(
     private val getQuizByIdUseCase: GetQuizByIdUseCase,
     private val submitQuizUseCase: SubmitQuizUseCase,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: AuthSessionRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<QuizTakingUiState>(QuizTakingUiState.Loading)
@@ -51,7 +51,7 @@ class QuizTakingViewModel @Inject constructor(
      * Load quiz by ID
      */
     fun loadQuiz(quizId: String) {
-        val userId = firebaseAuth.currentUser?.uid ?: return
+        val userId = firebaseAuth.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = QuizTakingUiState.Loading
@@ -197,7 +197,7 @@ class QuizTakingViewModel @Inject constructor(
      */
     fun submitQuiz() {
         val currentSubmission = submission ?: return
-        val userId = firebaseAuth.currentUser?.uid ?: return
+        val userId = firebaseAuth.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = QuizTakingUiState.Submitting

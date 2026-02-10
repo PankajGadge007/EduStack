@@ -27,25 +27,23 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
     implementation(project(":core:common"))
+
+    // get Firebase(repositories) features from this module
     implementation(project(":core:domain"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
 
     // Hilt (KSP)
     implementation(libs.hilt.android)

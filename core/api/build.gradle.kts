@@ -36,13 +36,13 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":core:database"))
+//    implementation(project(":core:database"))
 
     // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
+//    implementation(libs.retrofit)
+//    implementation(libs.retrofit.moshi)
+//    implementation(libs.okhttp)
+//    implementation(libs.okhttp.logging.interceptor)
 
     // Hilt
 //    implementation(libs.hilt.android)

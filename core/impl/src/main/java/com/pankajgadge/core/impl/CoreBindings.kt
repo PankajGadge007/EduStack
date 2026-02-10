@@ -1,7 +1,7 @@
 package com.pankajgadge.core.impl
 
 import com.pankajgadge.core.api.DispatcherProvider
-import com.pankajgadge.core.api.NetworkClient
+import com.pankajgadge.core.impl.network.NetworkClient
 import com.pankajgadge.core.api.logging.Logger
 import dagger.Binds
 import dagger.Module

@@ -2,9 +2,9 @@ package com.pankajgadge.user.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.core.domain.model.UserProfile
+import com.pankajgadge.core.domain.repository.AuthSessionRepository
 import com.pankajgadge.user.domain.usecase.GetUserProfileUseCase
 import com.pankajgadge.user.domain.usecase.UpdateUserProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val updateUserProfileUseCase: UpdateUserProfileUseCase,
-    private val firebaseAuth: FirebaseAuth
+    private val authSessionRepository: AuthSessionRepository
 ) : ViewModel() {
 
 
@@ -40,7 +40,7 @@ class ProfileViewModel @Inject constructor(
      * Load user profile from repository
      */
     fun loadProfile() {
-        val userId = firebaseAuth.currentUser?.uid ?: return
+        val userId = authSessionRepository.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = ProfileUiState.Loading
@@ -119,7 +119,7 @@ class ProfileViewModel @Inject constructor(
      * Sign out current user
      */
     fun signOut() {
-        firebaseAuth.signOut()
+        authSessionRepository.signOut()
         _uiState.value = ProfileUiState.Loading
     }
 }

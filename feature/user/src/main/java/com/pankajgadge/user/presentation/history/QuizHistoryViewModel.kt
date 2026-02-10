@@ -2,9 +2,9 @@ package com.pankajgadge.user.presentation.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.pankajgadge.core.common.result.Result
 import com.pankajgadge.core.domain.model.QuizResult
+import com.pankajgadge.core.domain.repository.AuthSessionRepository
 import com.pankajgadge.user.domain.usecase.GetQuizHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizHistoryViewModel @Inject constructor(
     private val getQuizHistoryUseCase: GetQuizHistoryUseCase,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: AuthSessionRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<QuizHistoryUiState>(QuizHistoryUiState.Loading)
@@ -39,7 +39,7 @@ class QuizHistoryViewModel @Inject constructor(
      * Load quiz history from repository
      */
     fun loadQuizHistory() {
-        val userId = firebaseAuth.currentUser?.uid ?: return
+        val userId = firebaseAuth.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = QuizHistoryUiState.Loading

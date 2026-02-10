@@ -39,16 +39,14 @@ dependencies {
     implementation(project(":core:api"))
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
-    implementation(project(":core:domain"))
     implementation(project(":core:firebase"))
+
+    // get Firebase(repositories) features from this module
+    implementation(project(":core:domain"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material3)
-
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
 
     // Hilt (KSP)
     implementation(libs.hilt.android)
