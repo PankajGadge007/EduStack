@@ -1,8 +1,8 @@
 [versions]
 # SDK & Build Tools
-agp = "8.9.1"
-kotlin = "2.0.21"
-ksp = "2.0.21-1.0.25"
+agp = "8.9.3"
+kotlin = "2.1.0"
+ksp = "2.1.0-1.0.29"
 
 # AndroidX Core
 coreKtx = "1.17.0"
@@ -20,7 +20,7 @@ firebase-bom = "33.7.0"
 google-services = "4.4.2"
 
 # Dependency Injection
-hilt = "2.50"
+hilt = "2.54"
 hilt-navigation-compose = "1.2.0"
 
 # Database

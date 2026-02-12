@@ -18,12 +18,14 @@ import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,11 +37,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.pankajgadge.core.domain.model.QuizResult
+import com.pankajgadge.quiz.model.QuizResultUiState
+import com.pankajgadge.quiz.model.QuizResultViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -53,10 +61,15 @@ fun QuizResultScreen(
     resultId: String,
     onNavigateBack: () -> Unit,
     onViewHistory: () -> Unit,
-    onRetakeQuiz: (String) -> Unit
+    onRetakeQuiz: (String) -> Unit,
+    viewModel: QuizResultViewModel = hiltViewModel()
 ) {
-    // For now, we'll pass the result from navigation
-    // In production, you'd load it from repository using resultId
+    val uiState by viewModel.uiState.collectAsState()
+
+    // Load result on first composition
+    LaunchedEffect(resultId) {
+        viewModel.loadResult(resultId)
+    }
 
     Scaffold(
         topBar = {
@@ -74,10 +87,49 @@ fun QuizResultScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
+                .padding(paddingValues)
         ) {
-            Text("Result Screen - Load result with ID: $resultId")
+            when (val state = uiState) {
+                is QuizResultUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                is QuizResultUiState.Success -> {
+                    QuizResultContent(
+                        result = state.result,
+                        onViewHistory = onViewHistory,
+                        onRetakeQuiz = { onRetakeQuiz(state.result.quizId) },
+                        onClose = onNavigateBack
+                    )
+                }
+                is QuizResultUiState.Error -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+        ) {
+                        Icon(
+                            imageVector = Icons.Default.Error,
+                            contentDescription = null,
+                            modifier = Modifier.size(64.dp),
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = state.message,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(onClick = onNavigateBack) {
+                            Text("Go Back")
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -87,7 +139,7 @@ fun QuizResultScreen(
  * Shows score, statistics, and question review
  */
 @Composable
-fun QuizResultContent(
+private fun QuizResultContent(
     result: QuizResult,
     onViewHistory: () -> Unit,
     onRetakeQuiz: () -> Unit,
@@ -145,17 +197,6 @@ fun QuizResultContent(
                 }
             }
         }
-
-        // Question Review (Optional)
-        item {
-            Text(
-                text = "Question Review",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        // TODO: Add individual question review
     }
 }
 

@@ -1,89 +1,45 @@
 package com.pankajgadge.edustack.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.pankajgadge.auth.dashboard.DashboardScreen
 import com.pankajgadge.auth.presentation.forgotpassword.ForgotPasswordScreen
-import com.pankajgadge.edustack.ui.screens.dashboard.DashboardScreen
 import com.pankajgadge.edustack.ui.screens.login.LoginScreen
-import com.pankajgadge.edustack.viewmodel.LoginViewModel
-import com.pankajgadge.quiz.presentation.QuizDetailScreen
 import com.pankajgadge.quiz.presentation.QuizListScreen
+import com.pankajgadge.quiz.presentation.result.QuizResultScreen
+import com.pankajgadge.quiz.presentation.taking.QuizTakingScreen
 import com.pankajgadge.user.presentation.history.QuizHistoryScreen
 import com.pankajgadge.user.presentation.profile.ProfileScreen
 
-sealed class Screen(val route: String) {
-    object Login : Screen("login")
-    object Dashboard : Screen("dashboard")
-    object Profile : Screen("profile")
-    object QuizHistory : Screen("quiz_history")
-    object QuizList : Screen("quiz_list")
-    object QuizDetail : Screen("quiz_detail/{quizId}") {
-        fun createRoute(quizId: String) = "quiz_detail/$quizId"
-    }
-
-    object PracticalList : Screen("practical_list")
-    object PracticalDetail : Screen("practical_detail/{practicalId}") {
-        fun createRoute(practicalId: String) = "practical_detail/$practicalId"
-    }
-
-    object Help : Screen("help")
-    object ForgotPassword : Screen("forgot_password")
-}
-
 @Composable
 fun NavGraph(
-    navController: NavHostController = rememberNavController(),
-    loginViewModel: LoginViewModel = hiltViewModel()
+    navController: NavHostController,
+    startDestination: String
 ) {
-    val isLoggedIn by loginViewModel.isLoggedIn.collectAsState()
-
-    // Navigate to appropriate screen based on login status
-    LaunchedEffect(isLoggedIn) {
-        if (isLoggedIn) {
-            navController.navigate(Screen.Dashboard.route) {
-                popUpTo(Screen.Login.route) { inclusive = true }
-            }
-        }
-    }
-
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) Screen.Dashboard.route else Screen.Login.route
+        startDestination = startDestination
     ) {
         // Login Screen
-        composable(Screen.Login.route) {
+        composable("login") {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(Screen.Dashboard.route) {
-                        // remove LoginScreen from stack after successful Login
-                        popUpTo(Screen.Login.route) { inclusive = true }
+                    navController.navigate("dashboard") {
+                        popUpTo("login") { inclusive = true }
                     }
                 },
                 onNavigateToForgotPassword = {
-                    navController.navigate(Screen.ForgotPassword.route)
+                    navController.navigate("forgot_password")
                 }
             )
         }
 
-        // Add this route
-        composable(Screen.ForgotPassword.route) {
+        // Forgot Password Screen
+        composable("forgot_password") {
             ForgotPasswordScreen(
                 onNavigateBack = {
                     navController.popBackStack()
@@ -91,132 +47,110 @@ fun NavGraph(
             )
         }
 
-        // Dashboard/Home Screen
-        composable(Screen.Dashboard.route) {
+        // Dashboard Screen
+        composable("dashboard") {
             DashboardScreen(
-                onQuizClick = { navController.navigate(Screen.QuizList.route) },
-                onPracticalClick = { navController.navigate(Screen.PracticalList.route) },
-                onHelpClick = { navController.navigate(Screen.Help.route) },
-                onNavigateToProfile = { navController.navigate(Screen.Profile.route) },
-                onNavigateToQuizHistory = { navController.navigate(Screen.QuizHistory.route) },
-                onLogout = {
-                    loginViewModel.signOut()
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(0) { inclusive = true }
-                    }
+                onNavigateToProfile = {
+                    navController.navigate("profile")
+                },
+                onNavigateToQuizHistory = {
+                    navController.navigate("quiz_history")
+                },
+                onNavigateToQuizList = {
+                    navController.navigate("quiz_list")
                 }
             )
         }
 
-        // ✅ NEW: Profile Screen
-        composable(Screen.Profile.route) {
+        // Profile Screen
+        composable("profile") {
             ProfileScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 },
                 onNavigateToQuizHistory = {
-                    navController.navigate(Screen.QuizHistory.route)
+                    navController.navigate("quiz_history")
                 },
                 onSignOut = {
-                    navController.navigate(Screen.Login.route) {
+                    navController.navigate("login") {
                         popUpTo(0) { inclusive = true }
                     }
                 }
             )
         }
 
-        // ✅ NEW: Quiz History Screen
-        composable(Screen.QuizHistory.route) {
+        // Quiz History Screen
+        composable("quiz_history") {
             QuizHistoryScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 },
-                onQuizClick = { quizId ->
-                    navController.navigate(Screen.QuizDetail.createRoute(quizId))
+                onQuizClick = { resultId ->
+                    navController.navigate("quiz_result/$resultId")
                 }
             )
         }
 
         // Quiz List Screen
-        composable(Screen.QuizList.route) {
+        composable("quiz_list") {
             QuizListScreen(
-                onQuizClick = { quizId ->
-                    navController.navigate(Screen.QuizDetail.createRoute(quizId))
+                onNavigateBack = {
+                    navController.popBackStack()
                 },
-                onBackClick = { navController.popBackStack() }
+                onQuizClick = { quizId ->
+                    // ✅ Navigate to Quiz Taking
+                    navController.navigate("quiz_taking/$quizId")
+        }
             )
         }
 
-        // Quiz Detail Screen
-        composable(Screen.QuizDetail.route) { backStackEntry ->
+        // ✅ NEW: Quiz Taking Screen
+        composable(
+            route = "quiz_taking/{quizId}",
+            arguments = listOf(
+                navArgument("quizId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
             val quizId = backStackEntry.arguments?.getString("quizId") ?: return@composable
-            QuizDetailScreen(
+
+            QuizTakingScreen(
                 quizId = quizId,
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        // Practical List Screen (Placeholder)
-        composable(Screen.PracticalList.route) {
-            PlaceholderScreen(
-                title = "IT Practicals",
-                message = "Coming Soon!",
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        // Practical Detail Screen (Placeholder)
-        composable(Screen.PracticalDetail.route) {
-            PlaceholderScreen(
-                title = "Practical Detail",
-                message = "Coming Soon!",
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-
-        // Help Screen (Placeholder)
-        composable(Screen.Help.route) {
-            PlaceholderScreen(
-                title = "Help",
-                message = "Help documentation coming soon!",
-                onBackClick = { navController.popBackStack() }
-            )
-        }
-    }
-}
-
-// ============================================
-// Placeholder Screen for unimplemented features
-// ============================================
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun PlaceholderScreen(
-    title: String,
-    message: String,
-    onBackClick: () -> Unit
-) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(title) },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Text("←")
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onQuizCompleted = { resultId ->
+                    // Navigate to results, removing quiz taking from back stack
+                    navController.navigate("quiz_result/$resultId") {
+                        popUpTo("quiz_taking/$quizId") { inclusive = true }
                     }
                 }
             )
         }
-    ) { paddingValues ->
-        androidx.compose.foundation.layout.Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = message,
-                style = MaterialTheme.typography.headlineMedium
+
+        // ✅ NEW: Quiz Result Screen
+        composable(
+            route = "quiz_result/{resultId}",
+            arguments = listOf(
+                navArgument("resultId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val resultId = backStackEntry.arguments?.getString("resultId") ?: return@composable
+
+            QuizResultScreen(
+                resultId = resultId,
+                onNavigateBack = {
+                    navController.popBackStack("dashboard", inclusive = false)
+                },
+                onViewHistory = {
+                    navController.navigate("quiz_history") {
+                        popUpTo("dashboard")
+                    }
+                },
+                onRetakeQuiz = { quizId ->
+                    navController.navigate("quiz_taking/$quizId") {
+                        popUpTo("quiz_result/$resultId") { inclusive = true }
+                    }
+                }
             )
         }
     }

@@ -17,7 +17,8 @@ class QuizMapper @Inject constructor() {
             questions = firebase.questions.map { toDomain(it) },
             duration = firebase.duration,
             createdBy = firebase.createdBy,
-            createdAt = firebase.createdAt
+            createdAt = firebase.createdAt,
+            difficulty = firebase.difficulty
         )
     }
 

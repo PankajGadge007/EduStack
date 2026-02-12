@@ -7,5 +7,6 @@ data class Quiz(
     val questions: List<Question>,
     val duration: Int, // in minutes
     val createdBy: String,
-    val createdAt: Long
+    val createdAt: Long,
+    val difficulty: String
 )

@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizHistoryViewModel @Inject constructor(
     private val getQuizHistoryUseCase: GetQuizHistoryUseCase,
-    private val firebaseAuth: AuthSessionRepository
+    private val authSessionRepository: AuthSessionRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<QuizHistoryUiState>(QuizHistoryUiState.Loading)
@@ -39,7 +39,7 @@ class QuizHistoryViewModel @Inject constructor(
      * Load quiz history from repository
      */
     fun loadQuizHistory() {
-        val userId = firebaseAuth.getCurrentUserId() ?: return
+        val userId = authSessionRepository.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = QuizHistoryUiState.Loading
@@ -63,7 +63,7 @@ class QuizHistoryViewModel @Inject constructor(
         }
     }
 //    init {
-//        val currentUser = firebaseAuth.currentUser
+//        val currentUser = authSessionRepository.currentUser
 //        Log.d("QuizHistory", "Current user: ${currentUser?.uid}")
 //        Log.d("QuizHistory", "Email: ${currentUser?.email}")
 //

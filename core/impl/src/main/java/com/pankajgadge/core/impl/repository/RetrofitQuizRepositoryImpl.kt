@@ -60,5 +60,6 @@ private fun QuizDto.toDomainModel() = Quiz(
     },
     duration = duration,
     createdBy = createdBy,
-    createdAt = createdAt
+    createdAt = createdAt,
+    difficulty = difficulty
 )

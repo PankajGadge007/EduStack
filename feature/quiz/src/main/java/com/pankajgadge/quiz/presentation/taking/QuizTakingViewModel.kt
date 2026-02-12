@@ -30,7 +30,7 @@ import javax.inject.Inject
 class QuizTakingViewModel @Inject constructor(
     private val getQuizByIdUseCase: GetQuizByIdUseCase,
     private val submitQuizUseCase: SubmitQuizUseCase,
-    private val firebaseAuth: AuthSessionRepository
+    private val authSessionRepository: AuthSessionRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<QuizTakingUiState>(QuizTakingUiState.Loading)
@@ -51,7 +51,7 @@ class QuizTakingViewModel @Inject constructor(
      * Load quiz by ID
      */
     fun loadQuiz(quizId: String) {
-        val userId = firebaseAuth.getCurrentUserId() ?: return
+        val userId = authSessionRepository.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = QuizTakingUiState.Loading
@@ -197,7 +197,7 @@ class QuizTakingViewModel @Inject constructor(
      */
     fun submitQuiz() {
         val currentSubmission = submission ?: return
-        val userId = firebaseAuth.getCurrentUserId() ?: return
+        val userId = authSessionRepository.getCurrentUserId() ?: return
 
         viewModelScope.launch {
             _uiState.value = QuizTakingUiState.Submitting

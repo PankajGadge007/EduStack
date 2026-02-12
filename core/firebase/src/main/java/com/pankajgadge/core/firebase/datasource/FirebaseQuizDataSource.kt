@@ -46,6 +46,7 @@ class FirebaseQuizDataSource @Inject constructor(
                         },
                         duration = doc.getLong("duration")?.toInt() ?: 30,
                         createdBy = doc.getString("createdBy") ?: "",
+                        difficulty = doc.getString("difficulty") ?: "",
                         createdAt = doc.getTimestamp("createdAt")?.toDate()?.time ?: 0L
                     )
                 } catch (e: Exception) {
@@ -84,6 +85,7 @@ class FirebaseQuizDataSource @Inject constructor(
                 },
                 duration = doc.getLong("duration")?.toInt() ?: 30,
                 createdBy = doc.getString("createdBy") ?: "",
+                difficulty = doc.getString("difficulty") ?: "",
                 createdAt = doc.getTimestamp("createdAt")?.toDate()?.time ?: 0L
             )
         } catch (e: Exception) {
@@ -123,6 +125,7 @@ data class FirebaseQuiz(
     val questions: List<FirebaseQuestion>,
     val duration: Int,
     val createdBy: String,
+    val difficulty: String,
     val createdAt: Long
 )
 
