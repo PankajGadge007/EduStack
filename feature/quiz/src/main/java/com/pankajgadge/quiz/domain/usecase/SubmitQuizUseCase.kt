@@ -11,6 +11,7 @@ import com.pankajgadge.core.domain.model.SubmitQuizResponse
 import com.pankajgadge.core.domain.model.SubmittedAnswer
 import com.pankajgadge.core.domain.repository.QuizRepository
 import com.pankajgadge.core.domain.repository.UserProfileRepository
+import com.pankajgadge.quiz.model.QuizResultUiState
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -67,6 +68,14 @@ class SubmitQuizUseCase @Inject constructor(
             return Result.Error(Exception("Failed to save quiz result"))
         }
 
+        // TODO Update quizResultData.id = saveResult.id
+
+        if (quizResult != null) {
+            quizResultData.id = saveResult.data.id
+        }
+//        else {
+//            _uiState.value = QuizResultUiState.Error("Quiz result not found")
+//        }
         // Create response
         val response = SubmitQuizResponse(
             resultId = quizResultData.id,

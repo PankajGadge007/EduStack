@@ -136,7 +136,7 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveQuizResult(quizResult: QuizResult): Result<Unit> {
+    override suspend fun saveQuizResult(quizResult: QuizResult): Result<QuizResult> {
         return try {
             val docRef = if (quizResult.id.isEmpty()) {
                 firestore.collection(QUIZ_RESULTS_COLLECTION).document()
@@ -155,7 +155,8 @@ class FirebaseUserProfileRepositoryImpl @Inject constructor(
             // Update user stats
             updateUserStats(quizResult.userId)
 
-            Result.Success(Unit)
+//            Result.Success(Unit)
+            Result.Success(quizResult)
         } catch (e: Exception) {
             Result.Error(Exception(e))
         }

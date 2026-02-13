@@ -45,7 +45,7 @@ interface UserProfileRepository {
      * @param quizResult Quiz result to save
      * @return Result indicating success or failure
      */
-    suspend fun saveQuizResult(quizResult: QuizResult): Result<Unit>
+    suspend fun saveQuizResult(quizResult: QuizResult): Result<QuizResult>
 
     /**
      * Delete quiz result

@@ -7,7 +7,7 @@ import java.util.Date
  * Used for quiz history and leaderboard
  */
 data class QuizResult(
-    val id: String = "",
+    var id: String = "",
     val userId: String,
     val quizId: String,
     val quizTitle: String,
